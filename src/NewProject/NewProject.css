@@ -1,0 +1,92 @@
+.NewProject {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #2f2f2f;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 400px;
+    margin: 40px auto;
+  }
+  
+  .NewProject h1 {
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  
+  .NewProject input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3f3f3f;
+    color: #fff;
+  }
+  
+  .NewProject input::placeholder {
+    color: #ccc;
+  }
+  
+  .NewProject select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3f3f3f;
+    color: #fff;
+  }
+  
+  .NewProject label {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .NewProject label:hover {
+    background-color: #3e8e41;
+  }
+  
+  .NewProject button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .NewProject button:hover {
+    background-color: #3e8e41;
+  }
+  
+  .NewProject button:last-child {
+    background-color: #e74c3c;
+  }
+  
+  .NewProject button:last-child:hover {
+    background-color: #c0392b;
+  }
+  
+  @media (max-width: 768px) {
+    .NewProject {
+      width: 90%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .NewProject {
+      width: 95%;
+    }
+  }
+  

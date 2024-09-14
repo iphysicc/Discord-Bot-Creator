@@ -1,0 +1,62 @@
+.App {
+    text-align: center;
+    background-color: #121212; 
+    color: #e0e0e0; 
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .App-header {
+    background-color: #1e1e1e; 
+    padding: 20px;
+    color: #e0e0e0; 
+  }
+  
+  .App-header h1 {
+    margin: 0;
+    font-size: xx-large;
+  }
+  
+  .App-content {
+    padding: 20px;
+  }
+  
+  .button-container {
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    background-color: #3a0ca3; 
+    border: none;
+    border-radius: 4px;
+    color: #e0e0e0; 
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #2c0a8b; 
+  }
+  
+  .projects-section {
+    text-align: left;
+  }
+  
+  .projects-section h2 {
+    margin-bottom: 10px;
+    color: #e0e0e0; 
+  }
+  
+  .project-block {
+    background-color: #1e1e1e; 
+    border: 1px solid #333; 
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #e0e0e0; 
+  }
+  
