@@ -18,7 +18,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'  # Node.js sürümünü 18 olarak güncelledik
+        node-version: '18'
     - name: Install Rust stable
       uses: dtolnay/rust-toolchain@stable
     - name: Install dependencies (Ubuntu only)
@@ -30,10 +30,10 @@ jobs:
       run: yarn && yarn build
     - uses: tauri-apps/tauri-action@v0
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
-        tagName: app-v__VERSION__ # the action automatically replaces __VERSION__ with the app version
-        releaseName: "App v__VERSION__"
-        releaseBody: "See the assets to download this version and install."
-        releaseDraft: true
-        prerelease: false
+        tagName: Alpha
+        releaseName: "Alpha __VERSION__ (initial development)" 
+        releaseBody: "A new version has been released! You can look at the appearance features."  
+        releaseDraft: true 
+        prerelease: true  
