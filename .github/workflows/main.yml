@@ -40,7 +40,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
       with:
-        tagName: 'v${{ steps.package-version.outputs.version }}'
-        releaseName: 'Release ${{ steps.package-version.outputs.version }}'
-        releaseBody: 'See the assets to download and install this version.'
+        tagName: 'alpha-${{ steps.package-version.outputs.version }}'
+        releaseName: 'Alpha ${{ steps.package-version.outputs.version }}'
+        releaseBody: 'A new version has been released! Please try it out and provide us with your feedback!'
         releaseDraft: true
