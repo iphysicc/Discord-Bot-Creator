@@ -90,3 +90,10 @@
     }
   }
   
+  .blur-background {
+    filter: blur(4px);
+  }
+  
+  .blur-background-content {
+    filter: blur(4px);
+  }

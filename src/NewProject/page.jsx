@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { dialog } from '@tauri-apps/api';
-import { writeTextFile, createDir, BaseDirectory } from '@tauri-apps/api/fs';
+import { writeTextFile, createDir } from '@tauri-apps/api/fs';
+import ProgressBar from '../Components/Progressbar/bar.jsx';
 import './NewProject.css';
 
 function NewProject() {
@@ -8,6 +9,7 @@ function NewProject() {
   const [projeAdi, setProjeAdi] = useState('');
   const [projeKonumu, setProjeKonumu] = useState('');
   const [discordVersion, setDiscordVersion] = useState('');
+  const [showProgress, setShowProgress] = useState(false);
 
   const handleKlasorSec = async () => {
     const selectedFolder = await dialog.open({
@@ -21,23 +23,27 @@ function NewProject() {
 
   const handleOlustur = async () => {
     if (klasorKonumu && projeAdi && discordVersion) {
-      try {
-        const projectFolder = `${klasorKonumu}/${projeAdi}`;
-        await createDir(projectFolder); 
-        await writeTextFile(`${projectFolder}/README.md`, `# ${projeAdi}\n\nDiscordJS Version: ${discordVersion}`);
-        alert(`Projeniz '${projeAdi}' konumunda '${projectFolder}' oluşturuldu.`);
-      } catch (error) {
-        console.error('Proje oluşturulurken hata oluştu:', error);
-        alert('Proje oluşturulurken bir hata oluştu.');
-      }
+      setShowProgress(true);
+      setTimeout(async () => {
+        try {
+          const projectFolder = `${klasorKonumu}/${projeAdi}`;
+          await createDir(projectFolder); 
+          await writeTextFile(`${projectFolder}/README.md`, `# ${projeAdi}\n\nDiscordJS Version: ${discordVersion}`);
+          alert(`Projeniz '${projeAdi}' konumunda '${projectFolder}' oluşturuldu.`);
+        } catch (error) {
+          console.error('Proje oluşturulurken hata oluştu:', error);
+          alert('Proje oluşturulurken bir hata oluştu.');
+        } finally {
+          setShowProgress(false);
+        }
+      }, 5000); 
     } else {
       alert('Lütfen tüm alanları doldurun ve klasör seçin.');
     }
   };
-  
 
   return (
-    <div className="NewProject">
+    <div className={`NewProject ${showProgress ? 'blur-background-content' : ''}`}>
       <h1>Yeni Proje Oluştur</h1>
       <input
         id="projeadi"
@@ -62,8 +68,9 @@ function NewProject() {
       </select>
       <button onClick={handleKlasorSec}>Klasör Seç</button>
       <p>Klasör Konumu: {klasorKonumu}</p>
-      <button onClick={handleOlustur}>Olustur</button>
-      <button>Iptal</button>
+      <button onClick={handleOlustur}>Oluştur</button>
+      <button>İptal</button>
+      {showProgress && <ProgressBar />}
     </div>
   );
 }
