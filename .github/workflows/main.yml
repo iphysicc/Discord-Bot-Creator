@@ -1,13 +1,10 @@
 name: "build"
-
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-
 jobs:
-
   publish-tauri:
     strategy:
       fail-fast: false
@@ -36,11 +33,15 @@ jobs:
     - name: Install app dependencies and build it
       run: yarn && yarn build
         
+    - name: Get Tauri App Version
+      id: get_version
+      run: echo "APP_VERSION=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_OUTPUT
+        
     - uses: tauri-apps/tauri-action@v0
       env:
         GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
       with:
-        tagName: 'Alpha'
-        releaseName: 'Alpha'
-        releaseBody: 'A new version has been released! Please try it out and provide us with your feedback!'
+        tagName: app-v${{ steps.get_version.outputs.APP_VERSION }}
+        releaseName: 'Discord Bot Creator v${{ steps.get_version.outputs.APP_VERSION }}'
+        releaseBody: 'A new version of Discord Bot Creator has been released! Please try it out and provide us with your feedback!'
         releaseDraft: false
