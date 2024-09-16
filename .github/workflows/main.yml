@@ -35,7 +35,11 @@ jobs:
         
     - name: Get Tauri App Version
       id: get_version
-      run: echo "APP_VERSION=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_OUTPUT
+      shell: pwsh
+      run: |
+        $json = Get-Content './src-tauri/tauri.conf.json' | ConvertFrom-Json
+        $version = $json.package.version
+        echo "APP_VERSION=$version" >> $env:GITHUB_OUTPUT
         
     - uses: tauri-apps/tauri-action@v0
       env:
@@ -43,5 +47,5 @@ jobs:
       with:
         tagName: app-v${{ steps.get_version.outputs.APP_VERSION }}
         releaseName: 'Discord Bot Creator v${{ steps.get_version.outputs.APP_VERSION }}'
-        releaseBody: 'A new version of Discord Bot Creator has been released! Please try it out and provide us with your feedback!'
+        releaseBody: 'Discord Bot Creator''ın yeni bir sürümü yayınlandı! Lütfen deneyin ve geri bildirimlerinizi bize iletin!'
         releaseDraft: false
