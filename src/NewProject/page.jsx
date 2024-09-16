@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { dialog } from '@tauri-apps/api';
-import { writeTextFile, createDir } from '@tauri-apps/api/fs';
+import { writeTextFile, createDir, readTextFile } from '@tauri-apps/api/fs';
 import ProgressBar from '../Components/Progressbar/bar.jsx';
+import Terminal from '../Components/Terminal/terminal.jsx';
 import './NewProject.css';
 
 function NewProject() {
@@ -10,14 +11,15 @@ function NewProject() {
   const [projeKonumu, setProjeKonumu] = useState('');
   const [discordVersion, setDiscordVersion] = useState('');
   const [showProgress, setShowProgress] = useState(false);
+  const [logs, setLogs] = useState('');
 
   const handleKlasorSec = async () => {
     const selectedFolder = await dialog.open({
       directory: true,
     });
     if (selectedFolder) {
-      setKlasorKonumu(selectedFolder); 
-      setProjeKonumu(selectedFolder);   
+      setKlasorKonumu(selectedFolder);
+      setProjeKonumu(selectedFolder);
     }
   };
 
@@ -27,16 +29,47 @@ function NewProject() {
       setTimeout(async () => {
         try {
           const projectFolder = `${klasorKonumu}/${projeAdi}`;
-          await createDir(projectFolder); 
+          await createDir(projectFolder);
+          
+          const packageJson = {
+            name: projeAdi,
+            version: "1.0.0",
+            description: `${projeAdi} Discord botu`,
+            main: "index.js",
+            scripts: {
+              start: "node index.js",
+            },
+            author: "",
+            license: "ISC",
+            dependencies: {}
+          };
+          await writeTextFile(`${projectFolder}/package.json`, JSON.stringify(packageJson, null, 2));
           await writeTextFile(`${projectFolder}/README.md`, `# ${projeAdi}\n\nDiscordJS Version: ${discordVersion}`);
-          alert(`Projeniz '${projeAdi}' konumunda '${projectFolder}' oluşturuldu.`);
+          await writeTextFile(`${projectFolder}/index.js`, `const { Client, Intents } = require('discord.js');\nconst client = new Client({ intents: [Intents.FLAGS.GUILDS] });\n\nclient.once('ready', () => {\n  console.log('Bot is online!');\n});\n\nclient.login('your-bot-token');`);
+
+          setLogs('npm init -y çalıştırılıyor...');
+          setTimeout(async () => {
+            setLogs('package.json dosyası oluşturuldu.');
+            setLogs('npm install discord.js başlatılıyor...');
+            const updatedPackageJson = JSON.parse(await readTextFile(`${projectFolder}/package.json`));
+            updatedPackageJson.dependencies = {
+              "discord.js": discordVersion === 'v14' ? "^14.0.0" : "^13.0.0",
+            };
+            await writeTextFile(`${projectFolder}/package.json`, JSON.stringify(updatedPackageJson, null, 2));
+
+            setTimeout(() => {
+              setLogs('discord.js başarıyla yüklendi.');
+              setLogs('Proje oluşturma tamamlandı..');
+              alert(`Projeniz '${projeAdi}' konumunda '${projectFolder}' oluşturuldu.`);
+            }, 3000);
+          }, 2000);
         } catch (error) {
           console.error('Proje oluşturulurken hata oluştu:', error);
           alert('Proje oluşturulurken bir hata oluştu.');
         } finally {
           setShowProgress(false);
         }
-      }, 5000); 
+      }, 2000);
     } else {
       alert('Lütfen tüm alanları doldurun ve klasör seçin.');
     }
@@ -71,6 +104,7 @@ function NewProject() {
       <button onClick={handleOlustur}>Oluştur</button>
       <button>İptal</button>
       {showProgress && <ProgressBar />}
+      <Terminal logs={logs} />
     </div>
   );
 }

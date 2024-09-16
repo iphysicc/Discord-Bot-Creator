@@ -1,0 +1,15 @@
+.terminal {
+    background-color: #000;
+    color: #00ff00;
+    padding: 10px;
+    height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    border-radius: 5px;
+    font-family: monospace;
+  }
+  
+  .terminal-content p {
+    margin: 0;
+  }
+  
