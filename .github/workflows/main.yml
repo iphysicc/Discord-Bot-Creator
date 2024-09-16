@@ -47,5 +47,5 @@ jobs:
       with:
         tagName: app-v${{ steps.get_version.outputs.APP_VERSION }}
         releaseName: 'Discord Bot Creator v${{ steps.get_version.outputs.APP_VERSION }}'
-        releaseBody: 'Discord Bot Creator''ın yeni bir sürümü yayınlandı! Lütfen deneyin ve geri bildirimlerinizi bize iletin!'
+        releaseBody: 'A new version has been released! Please try it out and provide us with your feedback!'
         releaseDraft: false
