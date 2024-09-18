@@ -1,0 +1,125 @@
+.project-container {
+    display: flex;
+    height: 100vh;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-color: #252526;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+  
+  .file-list {
+    flex-grow: 1;
+    margin-bottom: 20px;
+    overflow-y: auto;
+  }
+  
+  .file-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 4px;
+  }
+  
+  .file-item:hover {
+    background-color: #2a2d2e;
+  }
+  
+  .file-item.selected {
+    background-color: #37373d;
+    color: #ffffff;
+  }
+  
+  .file-item-icon {
+    margin-right: 8px;
+  }
+  
+  .file-item-name {
+    font-size: 14px;
+  }
+  
+  .sidebar-buttons {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .sidebar-button {
+    flex: 1;
+    padding: 8px;
+    background-color: #0e639c;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sidebar-button:hover {
+    background-color: #1177bb;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .main-content h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+  
+  .file-details {
+    background-color: #2d2d2d;
+    border-radius: 4px;
+    padding: 20px;
+  }
+  
+  .file-details h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: #ffffff;
+  }
+  
+  .file-type {
+    color: #d4d4d4;
+    margin-bottom: 12px;
+  }
+  
+  .file-content {
+    background-color: #1e1e1e;
+    padding: 12px;
+    border-radius: 4px;
+  }
+  
+  .file-content pre {
+    font-size: 14px;
+    color: #d4d4d4;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  .no-file-selected {
+    background-color: #2d2d2d;
+    border-radius: 4px;
+    padding: 20px;
+    color: #d4d4d4;
+  }

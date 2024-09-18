@@ -25,3 +25,7 @@ dist-ssr
 node_modules
 package-lock.json
 bun.lockb
+
+# Added by cargo
+
+/target

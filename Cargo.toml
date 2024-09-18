@@ -1,0 +1,7 @@
+[package]
+name = "dbc"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tauri = "1.8.0"

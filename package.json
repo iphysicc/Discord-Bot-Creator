@@ -11,11 +11,16 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^1.6.0",
+    "autoprefixer": "^10.4.20",
+    "lucide-react": "^0.441.0",
+    "postcss": "^8.4.47",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.26.2"
+    "react-router-dom": "^6.26.2",
+    "tailwindcss": "^3.4.12"
   },
   "devDependencies": {
+    "@shadcn/ui": "^0.0.4",
     "@tauri-apps/cli": "^1",
     "@vitejs/plugin-react": "^4.2.1",
     "vite": "^5.3.1"

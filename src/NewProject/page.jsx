@@ -3,6 +3,7 @@ import { dialog } from '@tauri-apps/api';
 import { writeTextFile, createDir, readTextFile } from '@tauri-apps/api/fs';
 import ProgressBar from '../Components/Progressbar/bar.jsx';
 import Terminal from '../Components/Terminal/terminal.jsx';
+import { useNavigate } from 'react-router-dom';
 import './NewProject.css';
 
 function NewProject() {
@@ -12,6 +13,8 @@ function NewProject() {
   const [discordVersion, setDiscordVersion] = useState('');
   const [showProgress, setShowProgress] = useState(false);
   const [logs, setLogs] = useState('');
+  
+  const navigate = useNavigate();
 
   const handleKlasorSec = async () => {
     const selectedFolder = await dialog.open({
@@ -61,6 +64,8 @@ function NewProject() {
               setLogs('discord.js başarıyla yüklendi.');
               setLogs('Proje oluşturma tamamlandı..');
               alert(`Projeniz '${projeAdi}' konumunda '${projectFolder}' oluşturuldu.`);
+              
+              navigate('/project', { state: { projectFolder } });
             }, 3000);
           }, 2000);
         } catch (error) {
