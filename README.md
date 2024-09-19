@@ -35,7 +35,7 @@ Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 
 ## İletişim
 
-Sorularınız veya geri bildirimleriniz için lütfen [issues](https://github.com/iphysicc/Discord-Bot-Creatorissues) bölümünü kullanın.
+Sorularınız veya geri bildirimleriniz için lütfen [issues](https://github.com/iphysicc/Discord-Bot-Creator/issues) bölümünü kullanın.
 
 ## Teşekkürler
 
