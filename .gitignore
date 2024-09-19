@@ -29,3 +29,5 @@ bun.lockb
 # Added by cargo
 
 /target
+Cargo.lock
+.vscode

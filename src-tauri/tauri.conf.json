@@ -7,14 +7,23 @@
   },
   "package": {
     "productName": "Discord Bot Creator",
-    "version": "0.2.8"
+    "version": "0.2.9"
   },
   "tauri": {
     "allowlist": {
       "all": false,
       "shell": {
         "all": false,
-        "open": true
+        "execute": true,
+        "sidecar": true,
+        "open": true,
+        "scope": [
+          {
+            "name": "powershell",
+            "cmd": "powershell",
+            "args": ["-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-Command", { "validator": "\\S+" }]
+          }
+        ]
       },
       "dialog": {
         "all": true
@@ -33,7 +42,12 @@
       {
         "title": "Discord Bot Creator",
         "width": 800,
-        "height": 600
+        "height": 600,
+        "resizable": true,
+        "fullscreen": false,
+        "decorations": true,
+        "transparent": false,
+        "maximized": false
       }
     ],
     "security": {
@@ -49,7 +63,12 @@
         "icons/128x128@2x.png",
         "icons/icon.icns",
         "icons/icon.ico"
-      ]
+      ],
+      "windows": {
+        "webviewInstallMode": {
+          "type": "downloadBootstrapper"
+        }
+      }
     }
   }
 }

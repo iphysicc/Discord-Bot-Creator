@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { readDir, readTextFile, writeTextFile, createDir } from '@tauri-apps/api/fs';
+import { Command } from '@tauri-apps/api/shell';
 import { useLocation } from 'react-router-dom';
-import { FolderIcon, FileIcon, PlusIcon, TrashIcon, SettingsIcon } from 'lucide-react';
+import { FolderIcon, FileIcon, PlusIcon, TrashIcon, SettingsIcon, TerminalIcon } from 'lucide-react';
 import './Project.css';
 
 const Project = () => {
@@ -9,6 +10,9 @@ const Project = () => {
   const [events, setEvents] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [itemContent, setItemContent] = useState('');
+  const [showTerminal, setShowTerminal] = useState(false);
+  const [terminalOutput, setTerminalOutput] = useState('');
+  const terminalRef = useRef(null);
   const location = useLocation();
   const projectFolder = location.state?.projectFolder;
 
@@ -99,6 +103,44 @@ const Project = () => {
     }
   };
 
+  const toggleTerminal = () => {
+    setShowTerminal(!showTerminal);
+  };
+
+  const runCommand = async (command) => {
+    setTerminalOutput(prev => prev + '\n' + `> ${command}`);
+    try {
+      const commandInstance = new Command('powershell', [
+        '-NoProfile',
+        '-NonInteractive',
+        '-ExecutionPolicy', 'Bypass',
+        '-Command',
+        `Set-Location -Path '${projectFolder}'; ${command}`
+      ]);
+  
+      const output = await commandInstance.execute();
+      
+      console.log('Command output:', output); 
+  
+      if (output.code !== 0) {
+        throw new Error(`Command failed with exit code ${output.code}`);
+      }
+      
+      setTerminalOutput(prev => prev + '\n' + (output.stdout || '(No output)'));
+    } catch (error) {
+      console.error('Komut çalıştırılırken hata oluştu:', error);
+      setTerminalOutput(prev => prev + '\n' + `Hata: ${error.message || 'Bilinmeyen bir hata oluştu'}`);
+      console.error('Detailed error:', error); 
+    }
+  };
+
+
+  useEffect(() => {
+    if (terminalRef.current) {
+      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+    }
+  }, [terminalOutput]);
+
   return (
     <div className="project-container">
       <div className="sidebar">
@@ -152,6 +194,33 @@ const Project = () => {
           <div className="no-selection">Düzenlemek için bir öğe seçin</div>
         )}
       </div>
+      
+      <button className="terminal-toggle" onClick={toggleTerminal}>
+        <TerminalIcon size={20} />
+      </button>
+      
+      {showTerminal && (
+        <div className="terminal-container">
+          <div className="terminal-header">
+            <span>PowerShell</span>
+            <button onClick={toggleTerminal}>X</button>
+          </div>
+          <div className="terminal-output" ref={terminalRef}>
+            {terminalOutput}
+          </div>
+          <input
+            type="text"
+            className="terminal-input"
+            placeholder="PowerShell komutu girin..."
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                runCommand(e.target.value);
+                e.target.value = '';
+              }
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
