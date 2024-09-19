@@ -27,7 +27,7 @@ Discord Bot Creator, Discord botları oluşturmayı ve yönetmeyi kolaylaştıra
 
 ## Lisans
 
-Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
+Bu proje [MIT Lisansı](https://github.com/iphysicc/Discord-Bot-Creator/blob/main/LICENSE.md) altında lisanslanmıştır.
 
 ## İletişim
 
