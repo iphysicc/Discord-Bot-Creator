@@ -25,10 +25,6 @@ Discord Bot Creator, Discord botları oluşturmayı ve yönetmeyi kolaylaştıra
 4. Kodu düzenleyin ve gerçek zamanlı önizleme ile test edin.
 5. Botunuzu doğrudan uygulama üzerinden çalıştırın ve yönetin.
 
-## Katkıda Bulunma
-
-Katkılarınızı memnuniyetle karşılıyoruz! Lütfen katkıda bulunmadan önce [CONTRIBUTING.md](CONTRIBUTING.md) dosyasını okuyun.
-
 ## Lisans
 
 Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
