@@ -1,116 +1,155 @@
 import React, { useState, useEffect } from 'react';
-import { FolderIcon, FileIcon, PlusIcon, TrashIcon, SettingsIcon, ChevronRightIcon } from 'lucide-react';
-import { readDir, readTextFile } from '@tauri-apps/api/fs';
+import { readDir, readTextFile, writeTextFile, createDir } from '@tauri-apps/api/fs';
 import { useLocation } from 'react-router-dom';
-import './Project.css'; 
+import { FolderIcon, FileIcon, PlusIcon, TrashIcon, SettingsIcon } from 'lucide-react';
+import './Project.css';
 
 const Project = () => {
-  const [files, setFiles] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [fileContent, setFileContent] = useState('');
+  const [commands, setCommands] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [itemContent, setItemContent] = useState('');
   const location = useLocation();
   const projectFolder = location.state?.projectFolder;
 
   useEffect(() => {
     if (projectFolder) {
-      loadProjectFiles(projectFolder);
+      loadProjectStructure(projectFolder);
     }
   }, [projectFolder]);
 
-  const loadProjectFiles = async (folder) => {
+  const loadProjectStructure = async (folder) => {
     try {
-      const entries = await readDir(folder);
-      const fileList = entries.map(entry => ({
-        name: entry.name,
-        type: entry.children ? 'directory' : 'file',
-        path: entry.path
-      }));
-      setFiles(fileList);
+      const commandsDir = `${folder}/commands`;
+      const eventsDir = `${folder}/events`;
+      
+      await createDir(commandsDir, { recursive: true });
+      await createDir(eventsDir, { recursive: true });
+
+      const commandFiles = await readDir(commandsDir);
+      const eventFiles = await readDir(eventsDir);
+
+      setCommands(commandFiles.map(file => ({ name: file.name, type: 'command' })));
+      setEvents(eventFiles.map(file => ({ name: file.name, type: 'event' })));
     } catch (error) {
-      console.error('Dosyalar yüklenirken hata oluştu:', error);
+      console.error('Proje yapısı yüklenirken hata oluştu:', error);
     }
   };
 
-  const handleFileSelect = async (file) => {
-    setSelectedFile(file);
-    if (file.type === 'file') {
+  const handleItemSelect = async (item) => {
+    setSelectedItem(item);
+    try {
+      const content = await readTextFile(`${projectFolder}/${item.type}s/${item.name}`);
+      setItemContent(content);
+    } catch (error) {
+      console.error('Dosya içeriği okunurken hata oluştu:', error);
+      setItemContent('Dosya içeriği okunamadı.');
+    }
+  };
+
+  const handleCreateItem = async (type) => {
+    const name = prompt(`Yeni ${type} adı:`);
+    if (name) {
       try {
-        const content = await readTextFile(file.path);
-        setFileContent(content);
+        const fileName = name.endsWith('.js') ? name : `${name}.js`;
+        await writeTextFile(`${projectFolder}/${type}s/${fileName}`, `// Yeni ${type}: ${name}`);
+        await loadProjectStructure(projectFolder);
       } catch (error) {
-        console.error('Dosya içeriği okunurken hata oluştu:', error);
-        setFileContent('Dosya içeriği okunamadı.');
+        console.error(`${type} oluşturulurken hata oluştu:`, error);
       }
-    } else {
-      setFileContent('');
     }
   };
 
-  const handleAddFile = () => {
-    alert('Dosya ekleme işlevi henüz uygulanmadı');
+  const handleAddEventToCommand = () => {
+    if (selectedItem && selectedItem.type === 'command') {
+      const event = prompt('Eklenecek olay adı:');
+      if (event) {
+        setItemContent(prevContent => `${prevContent}\n\n// Yeni olay: ${event}`);
+      }
+    }
   };
 
-  const handleDeleteFile = () => {
-    alert('Dosya silme işlevi henüz uygulanmadı');
+  const handleAddContentToCommand = () => {
+    if (selectedItem && selectedItem.type === 'command') {
+      const content = prompt('Eklenecek içerik:');
+      if (content) {
+        setItemContent(prevContent => `${prevContent}\n\n${content}`);
+      }
+    }
   };
 
-  const handleCustomCommands = () => {
-    alert('Özel komutlar işlevi henüz uygulanmadı');
+  const handleAddCustomFunction = () => {
+    if (selectedItem) {
+      const functionName = prompt('Özel işlev adı:');
+      if (functionName) {
+        setItemContent(prevContent => `${prevContent}\n\nfunction ${functionName}() {\n  // İşlev içeriği\n}`);
+      }
+    }
+  };
+
+  const handleSaveContent = async () => {
+    if (selectedItem) {
+      try {
+        await writeTextFile(`${projectFolder}/${selectedItem.type}s/${selectedItem.name}`, itemContent);
+        alert('İçerik kaydedildi.');
+      } catch (error) {
+        console.error('İçerik kaydedilirken hata oluştu:', error);
+        alert('İçerik kaydedilemedi.');
+      }
+    }
   };
 
   return (
     <div className="project-container">
       <div className="sidebar">
-        <h2>Proje Dosyaları</h2>
-        <div className="file-list">
-          {files.map((file, index) => (
-            <div
-              key={index}
-              className={`file-item ${selectedFile === file ? 'selected' : ''}`}
-              onClick={() => handleFileSelect(file)}
-            >
-              {file.type === 'directory' ? (
-                <FolderIcon className="file-item-icon" size={16} />
-              ) : (
-                <FileIcon className="file-item-icon" size={16} />
-              )}
-              <span className="file-item-name">{file.name}</span>
-              {file.type === 'directory' && (
-                <ChevronRightIcon style={{ marginLeft: 'auto' }} size={16} />
-              )}
-            </div>
-          ))}
+        <h2>Proje Yapısı</h2>
+        <div className="section">
+          <h3>Komutlar</h3>
+          <div className="item-list">
+            {commands.map((command, index) => (
+              <div key={index} className={`item ${selectedItem === command ? 'selected' : ''}`} onClick={() => handleItemSelect(command)}>
+                <FileIcon size={16} />
+                <span>{command.name}</span>
+              </div>
+            ))}
+          </div>
+          <button className="add-button" onClick={() => handleCreateItem('command')}>
+            <PlusIcon size={16} /> Yeni Komut
+          </button>
         </div>
-        <div className="sidebar-buttons">
-          <button className="sidebar-button" onClick={handleAddFile}>
-            <PlusIcon size={16} style={{ marginRight: '4px' }} />
-            Ekle
-          </button>
-          <button className="sidebar-button" onClick={handleDeleteFile}>
-            <TrashIcon size={16} style={{ marginRight: '4px' }} />
-            Sil
-          </button>
-          <button className="sidebar-button" onClick={handleCustomCommands}>
-            <SettingsIcon size={16} style={{ marginRight: '4px' }} />
-            Özel
+        <div className="section">
+          <h3>Olaylar</h3>
+          <div className="item-list">
+            {events.map((event, index) => (
+              <div key={index} className={`item ${selectedItem === event ? 'selected' : ''}`} onClick={() => handleItemSelect(event)}>
+                <FileIcon size={16} />
+                <span>{event.name}</span>
+              </div>
+            ))}
+          </div>
+          <button className="add-button" onClick={() => handleCreateItem('event')}>
+            <PlusIcon size={16} /> Yeni Olay
           </button>
         </div>
       </div>
-
       <div className="main-content">
-        <h1>Proje Detayları</h1>
-        {selectedFile ? (
-          <div className="file-details">
-            <h2>{selectedFile.name}</h2>
-            <p className="file-type">Tür: {selectedFile.type}</p>
-            <div className="file-content">
-              <pre>{fileContent}</pre>
+        {selectedItem ? (
+          <>
+            <h2>{selectedItem.name}</h2>
+            <textarea
+              value={itemContent}
+              onChange={(e) => setItemContent(e.target.value)}
+              className="content-editor"
+            />
+            <div className="button-group">
+              <button onClick={handleAddEventToCommand}>Komuta Olay Ekle</button>
+              <button onClick={handleAddContentToCommand}>Komuta İçerik Ekle</button>
+              <button onClick={handleAddCustomFunction}>Özel İşlev Ekle</button>
+              <button onClick={handleSaveContent}>Kaydet</button>
             </div>
-          </div>
+          </>
         ) : (
-          <div className="no-file-selected">
-            <p>Detayları görüntülemek için bir dosya seçin</p>
-          </div>
+          <div className="no-selection">Düzenlemek için bir öğe seçin</div>
         )}
       </div>
     </div>

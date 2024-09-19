@@ -1,61 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  height: 100%;
+}
+
 .App {
-    text-align: center;
-    background-color: #121212; 
-    color: #e0e0e0; 
-    min-height: 100vh;
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  .App-header {
-    background-color: #1e1e1e; 
-    padding: 20px;
-    color: #e0e0e0; 
-  }
-  
-  .App-header h1 {
-    margin: 0;
-    font-size: xx-large;
-  }
-  
-  .App-content {
-    padding: 20px;
-  }
-  
-  .button-container {
-    margin-bottom: 20px;
-  }
-  
-  .btn {
-    background-color: #3a0ca3; 
-    border: none;
-    border-radius: 4px;
-    color: #e0e0e0; 
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 0 10px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn:hover {
-    background-color: #2c0a8b; 
-  }
-  
-  .projects-section {
-    text-align: left;
-  }
-  
-  .projects-section h2 {
-    margin-bottom: 10px;
-    color: #e0e0e0; 
-  }
-  
-  .project-block {
-    background-color: #1e1e1e; 
-    border: 1px solid #333; 
-    border-radius: 4px;
-    padding: 10px;
-    margin-bottom: 10px;
-    color: #e0e0e0; 
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.App-header {
+  background-color: #252525;
+  padding: 30px 0;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #4a9eff;
+  letter-spacing: 1px;
+}
+
+.App-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 40px;
+}
+
+.button-container {
+  display: flex;
+  gap: 30px;
+}
+
+.btn {
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #3a3a3a;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+  background-color: #4a9eff;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 8px rgba(74, 158, 255, 0.2);
+}
+
+.App-footer {
+  background-color: #252525;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.creator, .version {
+  margin: 0;
+}
+
+.creator {
+  font-weight: 500;
+}
+
+.version {
+  color: #4a9eff;
+}
