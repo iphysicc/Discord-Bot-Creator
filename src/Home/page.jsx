@@ -80,7 +80,7 @@ function App() {
         </div>
       </div>
       <footer className="App-footer">
-        <p className="creator">Created by YourName</p>
+        <p className="creator">Created by Physic | XTEND</p>
         <p className="version">v{appVersion}</p>
       </footer>
     </div>
