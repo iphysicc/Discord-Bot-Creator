@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "Discord Bot Creator",
-    "version": "0.2.9"
+    "version": "0.2.9 FİX"
   },
   "tauri": {
     "allowlist": {
