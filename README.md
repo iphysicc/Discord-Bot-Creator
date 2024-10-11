@@ -1,38 +1,41 @@
-# Discord Bot Creator
+# DİSCORD TÜRKİYE'DE ERİŞİME ENGELLENDİĞİNDE PROJE GELİŞTİRİLME SÜRECİ DURDURULMUŞTUR.
+# DEVELOPMENT OF THIS PROJECT HAS BEEN HALTED DUE TO DISCORD BEING BLOCKED IN TURKEY.
 
-Discord Bot Creator, Discord botları oluşturmayı ve yönetmeyi kolaylaştıran kullanıcı dostu bir masaüstü uygulamasıdır.
+## Discord Bot Creator
 
-## Özellikler
+Discord Bot Creator is a user-friendly desktop application designed to make creating and managing Discord bots easy.
 
-- Sezgisel kullanıcı arayüzü ile kolay bot oluşturma
-- Önceden hazırlanmış şablonlar ve modüller
-- Gerçek zamanlı kod düzenleme ve önizleme
-- Entegre terminal ile komut çalıştırma
-- Otomatik dosya yapısı oluşturma
-- Discord API ile sorunsuz entegrasyon
+## Features
 
-## Kurulum
+- Intuitive user interface for easy bot creation
+- Pre-built templates and modules
+- Real-time code editing and preview
+- Integrated terminal for running commands
+- Automatic file structure generation
+- Seamless integration with the Discord API
 
-1. [Releases](https://github.com/iphysicc/Discord-Bot-Creator/releases) sayfasından işletim sisteminize uygun son sürümü indirin.
-2. İndirilen dosyayı çalıştırın ve kurulum yönergelerini takip edin.
-3. Kurulum tamamlandığında, Discord Bot Creator'ı başlatın.
+## Installation
 
-## Kullanım
+1. Download the latest version suitable for your operating system from the [Releases](https://github.com/iphysicc/Discord-Bot-Creator/releases) page.
+2. Run the downloaded file and follow the installation instructions.
+3. Once the installation is complete, launch Discord Bot Creator.
 
-1. Uygulamayı açın ve "Yeni Proje" veya "Yükle" seçeneklerinden birini seçin.
-2. Bot token'ınızı girin ve gerekli izinleri ayarlayın.
-3. Şablonlar veya özel modüller kullanarak botunuzu oluşturun.
-4. Kodu düzenleyin ve gerçek zamanlı önizleme ile test edin.
-5. Botunuzu doğrudan uygulama üzerinden çalıştırın ve yönetin.
+## Usage
 
-## Lisans
+1. Open the application and choose either "New Project" or "Load".
+2. Enter your bot token and set the necessary permissions.
+3. Create your bot using templates or custom modules.
+4. Edit the code and test it with real-time previews.
+5. Run and manage your bot directly from the app.
 
-Bu proje [MIT Lisansı](https://github.com/iphysicc/Discord-Bot-Creator/blob/main/LICENSE.md) altında lisanslanmıştır.
+## License
 
-## İletişim
+This project is licensed under the [MIT License](https://github.com/iphysicc/Discord-Bot-Creator/blob/main/LICENSE.md).
 
-Sorularınız veya geri bildirimleriniz için lütfen [issues](https://github.com/iphysicc/Discord-Bot-Creator/issues) bölümünü kullanın.
+## Contact
 
-## Teşekkürler
+For questions or feedback, please use the [issues](https://github.com/iphysicc/Discord-Bot-Creator/issues) section.
 
-Bu projeyi mümkün kılan tüm katkıda bulunanlara ve açık kaynak topluluğuna teşekkür ederiz.
+## Acknowledgments
+
+Thanks to all contributors and the open-source community for making this project possible.
